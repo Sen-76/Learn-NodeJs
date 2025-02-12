@@ -1,8 +1,14 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+// import { initDatabase } from './mssql-connection';
+import { client } from './mongo-connection';
+import { getComments } from './services/comments';
 
 const app = express();
 const port = 3000;
+
+// initDatabase();
+client.connect();
 
 app.use(
   cors({
@@ -19,6 +25,16 @@ app.get('/', (req: Request, res: Response) => {
 
 app.get('/api', (req, res) => {
   res.json(['userOne', 'userTwo', 'userThree']);
+});
+
+app.get('/testmongo', async (req, res) => {
+  try {
+    const results = await getComments();
+    res.json(results);
+  } catch (err) {
+    console.error('Error in /testmongo:', err);
+    res.status(500).json({ error: 'Failed to query database' });
+  }
 });
 
 app.listen(port, () => {

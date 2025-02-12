@@ -7,8 +7,13 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "../",
+    "baseUrl": "./",
+    "paths": {
+      "@common/*": ["../common/*"],
+      "@/*": ["*/src"]
+    }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "common/models/**/*"],
   "exclude": ["node_modules"]
 }

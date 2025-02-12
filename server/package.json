@@ -14,7 +14,12 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.13.0",
+    "morgan": "^1.10.0",
+    "msnodesqlv8": "^4.5.0",
+    "save": "^2.9.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
