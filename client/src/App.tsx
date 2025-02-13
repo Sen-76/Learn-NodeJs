@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { DataGridResult } from '@common/models/common';
 
 const fetchComment = async (): Promise<DataGridResult<A>> => {
-  const response = await fetch('/testmongo');
+  const response = await fetch('/comments/querydatagrid');
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }

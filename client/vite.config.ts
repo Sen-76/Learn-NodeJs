@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': 'http://localhost:3000',
-      '/testmongo': 'http://localhost:3000',
+      '/comments/querydatagrid': 'http://localhost:3000',
     },
   },
 });

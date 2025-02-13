@@ -1,14 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import cors from 'cors';
 // import { initDatabase } from './mssql-connection';
-import { client } from './mongo-connection';
-import { getComments } from './services/comments';
+import { connectDB } from './config/connections/mongo-connection';
+import controller from './routes';
+// import InitialData from './config/initial-data';
 
 const app = express();
 const port = 3000;
 
 // initDatabase();
-client.connect();
+connectDB();
+// InitialData();
 
 app.use(
   cors({
@@ -19,23 +21,7 @@ app.use(
   })
 );
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, World!');
-});
-
-app.get('/api', (req, res) => {
-  res.json(['userOne', 'userTwo', 'userThree']);
-});
-
-app.get('/testmongo', async (req, res) => {
-  try {
-    const results = await getComments();
-    res.json(results);
-  } catch (err) {
-    console.error('Error in /testmongo:', err);
-    res.status(500).json({ error: 'Failed to query database' });
-  }
-});
+controller(app);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

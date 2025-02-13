@@ -1,10 +1,12 @@
-import { client } from '../mongo-connection';
-import { queryDataGrid } from './common';
+import mongoose from 'mongoose';
+import { queryDataGrid } from './commonService';
 import { DataGridOptions } from '@common/models/common';
+import { commentSchema } from '../models/comment';
+
+// Create the Mongoose model
+const CommentModel = mongoose.model('Comment', commentSchema);
 
 export async function getComments() {
-  const collection = client.db('sample_mflix').collection('comments');
-
   try {
     const options: DataGridOptions = {
       page: 1,
@@ -13,7 +15,8 @@ export async function getComments() {
       searchFields: ['name', 'email'],
       sort: { name: 1 },
     };
-    const results = await queryDataGrid(collection, options);
+
+    const results = await queryDataGrid(CommentModel, options);
     return results;
   } catch (err) {
     console.error('Error querying the database:', err);

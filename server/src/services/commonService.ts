@@ -1,7 +1,7 @@
-import { Collection, Document } from 'mongodb';
+import { Model, Document } from 'mongoose';
 import { DataGridOptions } from '@common/models/common';
 
-export async function queryDataGrid<T extends Document>(collection: Collection<T>, options: DataGridOptions) {
+export async function queryDataGrid<T extends Document>(model: Model<T>, options: DataGridOptions) {
   const { page = 1, pageSize = 10, search = '', searchFields = [], filter = {}, sort = { _id: 1 } } = options;
 
   // Construct the query
@@ -17,11 +17,11 @@ export async function queryDataGrid<T extends Document>(collection: Collection<T
   // Calculate skip value for pagination
   const skip = (page - 1) * pageSize;
 
-  // Fetch data from MongoDB
-  const results = await collection.find(query).sort(sort).skip(skip).limit(pageSize).toArray();
+  // Fetch data using Mongoose
+  const results = await model.find(query).sort(sort).skip(skip).limit(pageSize).exec();
 
   // Get total count of documents (for pagination metadata)
-  const totalCount = await collection.countDocuments(query);
+  const totalCount = await model.countDocuments(query);
 
   // Calculate total pages
   const totalPages = Math.ceil(totalCount / pageSize);
