@@ -7,7 +7,7 @@ const router = express.Router();
 // Use router.get instead of router.use
 router.get('/querydatagrid', async (req: Request, res: Response) => {
   try {
-    const results = await getComments();
+    const results = await getComments(req.query);
     res.json(results);
   } catch (err) {
     console.error('Error in querydatagrid:', err);

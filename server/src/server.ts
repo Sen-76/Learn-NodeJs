@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-// import { initDatabase } from './mssql-connection';
 import { connectDB } from './config/connections/mongo-connection';
 import controller from './routes';
 // import InitialData from './config/initial-data';
@@ -8,7 +7,6 @@ import controller from './routes';
 const app = express();
 const port = 3000;
 
-// initDatabase();
 connectDB();
 // InitialData();
 

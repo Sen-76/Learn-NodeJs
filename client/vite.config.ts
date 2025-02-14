@@ -9,11 +9,5 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@/', replacement: resolve(__dirname, './src') }],
   },
-  server: {
-    proxy: {
-      '/api': 'http://localhost:3000',
-      '/comments/querydatagrid': 'http://localhost:3000',
-    },
-  },
 });
 
