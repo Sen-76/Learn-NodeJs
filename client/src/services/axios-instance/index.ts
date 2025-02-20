@@ -1,7 +1,8 @@
 import { cookie } from '@/helpers/cookie';
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3000/';
+const apiUrl = import.meta.env.VITE_REACT_APP_SERVER;
+console.log(apiUrl);
 const user: A = cookie.getCookie('userLogin') ?? '{}';
 const token = JSON.parse(user)?.token ?? '';
 const source = axios.CancelToken.source();
@@ -25,7 +26,6 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-// Response Interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;

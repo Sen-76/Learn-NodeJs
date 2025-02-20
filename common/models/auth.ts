@@ -20,3 +20,8 @@ export interface ResetModel {
   reNewPassword: string;
   verificationCode: string;
 }
+
+export interface GoogleLogin {
+  token: string;
+  clientId: string;
+}

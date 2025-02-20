@@ -1,8 +1,9 @@
-import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import { userSchema } from '@/models/user';
-import { LoginModel, RegisModel, ResetModel, VerifyModel } from '@common/models/auth';
+import { OAuth2Client } from 'google-auth-library';
+import { GoogleLogin, LoginModel, RegisModel, ResetModel, VerifyModel } from '@common/models/auth';
 
 // Create the Mongoose model
 const UserModel = mongoose.model('User', userSchema);
@@ -144,6 +145,26 @@ export const Auth = {
       return { statusCode: 200, data: user };
     } catch (err) {
       console.error('Error regis:', err);
+      throw err;
+    }
+  },
+
+  async GoogleLogin(model: GoogleLogin) {
+    try {
+      const client = new OAuth2Client(process.env.GG_CLIENT_ID, process.env.GG_CLIENT_SECRET);
+
+      const { token, clientId } = model;
+
+      client.setCredentials({ id_token: token });
+
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: clientId,
+      });
+
+      return ticket.getPayload();
+    } catch (err) {
+      console.error('Error login:', err);
       throw err;
     }
   },

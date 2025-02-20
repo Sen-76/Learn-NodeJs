@@ -4,7 +4,7 @@ import authRouter from './auth';
 
 const Controller = (app: Express) => {
   app.use('/comments', commentsRouter);
-  app.use('/auths', authRouter);
+  app.use('/auth', authRouter);
 };
 
 export default Controller;

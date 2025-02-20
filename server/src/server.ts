@@ -1,25 +1,20 @@
-import express from 'express';
 import cors from 'cors';
-import { connectDB } from './config/connections/mongo-connection';
+import dotenv from 'dotenv';
+import express from 'express';
 import controller from './routes';
+import { connectDB } from './config/connections/mongo-connection';
 // import InitialData from './config/initial-data';
 
+dotenv.config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+
+app.use(cors());
 
 connectDB();
 // InitialData();
 
 app.use(express.json());
-
-app.use(
-  cors({
-    origin: 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
-  })
-);
 
 controller(app);
 

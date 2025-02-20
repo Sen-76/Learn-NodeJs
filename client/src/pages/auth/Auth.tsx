@@ -1,23 +1,24 @@
+import useLayoutStore from '@/store/layoutStore';
+import { Rule } from '@/common/components/Input';
 import { useEffect, useRef, useState } from 'react';
-import GoogleSvg from './GoogleSvg';
 import { QueryClient } from '@tanstack/react-query';
 import axiosInstance from '@/services/axios-instance';
 import { Form, DividerWithText, Link, Checkbox, Button, Input } from '@/common/components';
-import useLayoutStore from '@/store/layoutStore';
-import { Rule } from '@/common/components/Input';
+import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google';
 
 const Login = () => {
   const [formType, setFormType] = useState<'Login' | 'Regis' | 'Forgot' | 'Verify' | 'Reset'>('Login');
   const { setNotification } = useLayoutStore();
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = new QueryClient();
+  const googleId = import.meta.env.VITE_REACT_APP_GG_CLIENT_ID;
 
   const onLogin = async (val: A) => {
     try {
       const data = await queryClient.fetchQuery({
         queryKey: ['fetchLogin', val],
         queryFn: async () => {
-          const response = await axiosInstance.post('auths/login', val);
+          const response = await axiosInstance.post('auth/login', val);
           if (response.status !== 200) throw new Error('Network response was not ok');
           return response.data;
         },
@@ -35,7 +36,7 @@ const Login = () => {
       const data = await queryClient.fetchQuery({
         queryKey: ['fetchRegis', val],
         queryFn: async () => {
-          const response = await axiosInstance.post('auths/regis', val);
+          const response = await axiosInstance.post('auth/regis', val);
           if (response.status !== 200) throw new Error('Network response was not ok');
           return response.data;
         },
@@ -52,7 +53,7 @@ const Login = () => {
       const data = await queryClient.fetchQuery({
         queryKey: ['fetchForgot', val],
         queryFn: async () => {
-          const response = await axiosInstance.post('auths/forgot', val);
+          const response = await axiosInstance.post('auth/forgot', val);
           if (response.status !== 200) throw new Error('Network response was not ok');
           return response.data;
         },
@@ -70,7 +71,7 @@ const Login = () => {
       const data = await queryClient.fetchQuery({
         queryKey: ['fetchForgot', val],
         queryFn: async () => {
-          const response = await axiosInstance.post('auths/verify', val);
+          const response = await axiosInstance.post('auth/verify', val);
           if (response.status !== 200) throw new Error('Network response was not ok');
           return response.data;
         },
@@ -88,7 +89,7 @@ const Login = () => {
       const data = await queryClient.fetchQuery({
         queryKey: ['reset', val],
         queryFn: async () => {
-          const response = await axiosInstance.post('auths/reset', val);
+          const response = await axiosInstance.post('auth/reset', val);
           if (response.status !== 200) throw new Error('Network response was not ok');
           return response.data;
         },
@@ -294,6 +295,22 @@ const Login = () => {
     if (formRef.current) formRef.current.reset();
   }, [formType]);
 
+  const handleSuccess = async (credentialResponse: CredentialResponse) => {
+    try {
+      const response = await axiosInstance.post('/auth/google', {
+        token: (credentialResponse.credential as string) ?? '',
+        client_id: credentialResponse.clientId,
+      });
+      console.log(response);
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  };
+
+  const handleError = () => {
+    console.log('Login Failed');
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 w-[420px] sm:max-w-xl sm:mx-auto">
@@ -303,10 +320,9 @@ const Login = () => {
 
           <DividerWithText>Or</DividerWithText>
 
-          <button className="w-full flex justify-center cursor-pointer items-center border border-gray-300 rounded-md shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200">
-            <GoogleSvg />
-            <span>Continue with Google</span>
-          </button>
+          <GoogleOAuthProvider clientId={googleId}>
+            <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+          </GoogleOAuthProvider>
         </div>
       </div>
     </div>
