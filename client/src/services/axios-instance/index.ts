@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { cookie } from '@/helpers/cookie';
+import axios from 'axios';
 
 const apiUrl = 'http://localhost:3000/';
 const user: A = cookie.getCookie('userLogin') ?? '{}';

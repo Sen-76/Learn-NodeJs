@@ -8,14 +8,6 @@ const CommentModel = mongoose.model('Comment', commentSchema);
 
 export async function getComments(options: DataGridOptions) {
   try {
-    const options: DataGridOptions = {
-      page: 1,
-      pageSize: 5,
-      search: 'Mercedes Tyler',
-      searchFields: ['name', 'email'],
-      sort: { name: 1 },
-    };
-
     return await queryDataGrid(CommentModel, options);
   } catch (err) {
     console.error('Error querying the database:', err);

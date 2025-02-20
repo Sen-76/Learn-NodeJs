@@ -2,14 +2,6 @@ import axiosInstance from '@/services/axios-instance';
 import { DataGridOptions, DataGridResult } from '@common/models/common';
 import { useQuery } from '@tanstack/react-query';
 
-const options: DataGridOptions = {
-  page: 1,
-  pageSize: 5,
-  search: 'Mercedes Tyler',
-  searchFields: ['name', 'email'],
-  sort: { name: 1 },
-};
-
 const fetchComments = async (options: DataGridOptions) => {
   try {
     const response = await axiosInstance.get<DataGridResult<A>>('comments/querydatagrid', {
@@ -24,6 +16,12 @@ const fetchComments = async (options: DataGridOptions) => {
 };
 
 const Tanstack = () => {
+  const options: DataGridOptions = {
+    page: 1,
+    pageSize: 5,
+    search: 'Mercedes Tyler',
+    searchFields: ['name', 'email'],
+  };
   const { data, error, isLoading } = useQuery({
     queryKey: ['fetchComments', options],
     queryFn: () => fetchComments(options),

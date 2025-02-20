@@ -29,6 +29,6 @@
       "@common/*": ["../../common/*"]
     }
   },
-  "include": ["src", "common/models/**/*"]
+  "include": ["src", "common/models/**/*", "../common/helpers"]
 }
 

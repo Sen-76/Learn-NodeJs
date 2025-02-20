@@ -12,7 +12,7 @@ export interface IComment extends Document {
 
 // Define the schema
 export const commentSchema = new Schema<IComment>({
-  _id: { type: Schema.Types.ObjectId, required: true },
+  _id: { type: Schema.Types.ObjectId, default: () => new Types.ObjectId(), required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
   movie_id: { type: Schema.Types.ObjectId, required: true },

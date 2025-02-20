@@ -4,7 +4,6 @@ import { getComments } from '../services/commentService';
 
 const router = express.Router();
 
-// Use router.get instead of router.use
 router.get('/querydatagrid', async (req: Request, res: Response) => {
   try {
     const results = await getComments(req.query);
