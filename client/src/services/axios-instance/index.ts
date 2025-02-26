@@ -2,9 +2,7 @@ import { cookie } from '@/helpers/cookie';
 import axios from 'axios';
 
 const apiUrl = import.meta.env.VITE_REACT_APP_SERVER;
-console.log(apiUrl);
-const user: A = cookie.getCookie('userLogin') ?? '{}';
-const token = JSON.parse(user)?.token ?? '';
+const token = cookie.getCookie('token') ?? '';
 const source = axios.CancelToken.source();
 
 const axiosInstance = axios.create({
@@ -12,13 +10,14 @@ const axiosInstance = axios.create({
   baseURL: apiUrl,
   headers: {
     'Access-Control-Allow-Origin': '*',
+    Authorization: `Bearer ${token}`,
   },
   cancelToken: source.token,
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => {

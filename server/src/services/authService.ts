@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { userSchema } from '@/models/user';
 import { OAuth2Client } from 'google-auth-library';
 import { GoogleLogin, LoginModel, RegisModel, ResetModel, VerifyModel } from '@common/models/auth';
+import nodemailer from 'nodemailer';
 
 // Create the Mongoose model
 const UserModel = mongoose.model('User', userSchema);
@@ -56,20 +57,30 @@ const randomWord = (length: number) => {
   return str;
 };
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'mailmail.76201@gmail.com',
+    pass: 'sjho bomb gqxs mmye',
+  },
+});
+
 export const Auth = {
   async Login(model: LoginModel) {
     try {
       const user = await UserModel.findOne({ email: model.email });
       if (!user) return { statusCode: 404, error: 'User not found' };
       const validPassword = await bcrypt.compare(model.password, user.password);
-      console.log(validPassword);
+
       if (!validPassword) return { statusCode: 401, error: 'Invalid password' };
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60,
           userId: user._id,
+          name: user.name,
+          email: user.email,
         },
-        'secretkey'
+        process.env.SECRET_KEY as string
       );
       return { statusCode: 200, data: token };
     } catch (err) {
@@ -103,17 +114,38 @@ export const Auth = {
       const verifyString = randomWord(5);
 
       const expirationTime = new Date();
-      expirationTime.setMinutes(expirationTime.getMinutes() + 15); // 15 minutes expiration
+      expirationTime.setMinutes(expirationTime.getMinutes() + 15);
 
       user.verificationCode = verifyString;
       user.verificationCodeExpiry = expirationTime;
 
       await user.save();
 
-      return { statusCode: 200, data: verifyString };
+      await this.SendMail(
+        user.email,
+        'Password Reset Verification Code',
+        `Your verification code is: ${verifyString}. It will expire in 15 minutes.`
+      );
+
+      return { statusCode: 200 };
     } catch (err) {
       console.error('Error regis:', err);
       throw err;
+    }
+  },
+
+  async SendMail(to: string, subject: string, text: string) {
+    try {
+      const info = await transporter.sendMail({
+        from: process.env.MAIL_USER,
+        to,
+        subject,
+        text,
+      });
+      console.log('Email sent: ' + info.response);
+    } catch (error) {
+      console.error('Error sending email: ', error);
+      throw error;
     }
   },
 

@@ -1,10 +1,11 @@
 import axiosInstance from '@/services/axios-instance';
 import { DataGridOptions, DataGridResult } from '@common/models/common';
 import { useQuery } from '@tanstack/react-query';
+import UserForm from './UserForm';
 
-const fetchComments = async (options: DataGridOptions) => {
+const fetchUsers = async (options: DataGridOptions) => {
   try {
-    const response = await axiosInstance.post<DataGridResult<A>>('comments/querydatagrid', options);
+    const response = await axiosInstance.post<DataGridResult<A>>('users/querydatagrid', options);
     if (response.status !== 200) throw new Error('Network response was not ok');
     return response.data;
   } catch (error) {
@@ -12,17 +13,14 @@ const fetchComments = async (options: DataGridOptions) => {
     throw error;
   }
 };
-
-const Tanstack = () => {
+const User = () => {
   const options: DataGridOptions = {
     page: 1,
     pageSize: 5,
-    search: 'Mercedes Tyler',
-    searchFields: ['name', 'email'],
   };
   const { data, error, isLoading } = useQuery({
-    queryKey: ['fetchComments', options],
-    queryFn: () => fetchComments(options),
+    queryKey: ['fetchUsers', options],
+    queryFn: () => fetchUsers(options),
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -30,16 +28,15 @@ const Tanstack = () => {
 
   return (
     <div>
-      <h2>Comments:</h2>
+      <h2>Users:</h2>
       {data?.results?.map((comment: A) => (
         <div key={comment._id}>
-          <strong>{comment.name}</strong> ({comment.email})<p>{comment.text}</p>
-          <em>{new Date(comment.date).toLocaleDateString()}</em>
-          <hr />
+          <strong>{comment.name}</strong> ({comment.email})
         </div>
       ))}
+      <UserForm />
     </div>
   );
 };
 
-export default Tanstack;
+export default User;

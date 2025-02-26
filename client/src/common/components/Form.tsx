@@ -3,8 +3,8 @@ import { FormItemRef } from './Input';
 
 interface FormProps {
   children: ReactNode;
-  onFinish: (formData: A) => void;
-  id: string;
+  onFinish?: (formData: A) => void;
+  id?: string;
   className?: string;
 }
 
@@ -25,7 +25,7 @@ const Form = (props: FormProps) => {
 
     const formData = new FormData(event.currentTarget);
     const formObject = Object.fromEntries(formData.entries());
-    onFinish(formObject);
+    onFinish?.(formObject);
   };
 
   const childrenWithRefs = React.Children.map(children, (child) => {

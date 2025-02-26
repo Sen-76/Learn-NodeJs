@@ -25,3 +25,8 @@ export interface GoogleLogin {
   token: string;
   clientId: string;
 }
+
+export enum Role {
+  Admin = 'Admin',
+  User = 'User',
+}

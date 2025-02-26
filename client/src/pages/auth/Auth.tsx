@@ -6,12 +6,12 @@ import axiosInstance from '@/services/axios-instance';
 import { Form, DividerWithText, Link, Checkbox, Button, Input } from '@/common/components';
 import { GoogleOAuthProvider, GoogleLogin, CredentialResponse } from '@react-oauth/google';
 
+const googleId = import.meta.env.VITE_REACT_APP_GG_CLIENT_ID;
 const Login = () => {
   const [formType, setFormType] = useState<'Login' | 'Regis' | 'Forgot' | 'Verify' | 'Reset'>('Login');
   const { setNotification } = useLayoutStore();
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = new QueryClient();
-  const googleId = import.meta.env.VITE_REACT_APP_GG_CLIENT_ID;
 
   const onLogin = async (val: A) => {
     try {

@@ -7,14 +7,11 @@ router.post('/login', async (req: Request, res: Response) => {
   try {
     const result = await Auth.Login(req.body);
 
-    // Set the cookie before sending the response
     res.cookie('token', result.data, {
-      httpOnly: true,
-      maxAge: 60 * 60 * 1000, // 1 hour
-      sameSite: 'strict',
+      secure: false,
+      maxAge: 60 * 60 * 1000,
     });
 
-    // Send the response once
     res.status(result.statusCode).json({
       token: result.data,
       error: result.error,
@@ -42,7 +39,6 @@ router.post('/forgot', async (req: Request, res: Response) => {
   try {
     const result = await Auth.FogotPassword(req.body);
     res.status(result.statusCode).json({
-      token: result.data,
       error: result.error,
     });
   } catch (err: any) {
