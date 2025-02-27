@@ -82,6 +82,7 @@ export const Auth = {
         },
         process.env.SECRET_KEY as string
       );
+
       return { statusCode: 200, data: token };
     } catch (err) {
       console.error('Error login:', err);

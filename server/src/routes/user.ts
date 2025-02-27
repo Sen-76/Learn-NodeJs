@@ -18,7 +18,7 @@ router.post('/querydatagrid', authenticateJWT, async (req: Request, res: Respons
   }
 });
 
-router.post('/test', authenticateJWT, upload.single('avatar'), async (req: Request, res: Response) => {
+router.post('/create', authenticateJWT, upload.single('avatar'), async (req: Request, res: Response) => {
   try {
     // console.log(req.file);
     // console.log(req.files);

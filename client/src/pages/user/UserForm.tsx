@@ -37,7 +37,7 @@ const UserForm = () => {
     const data = await queryClient.fetchQuery({
       queryKey: ['test', val],
       queryFn: async () => {
-        const response = await axiosInstance.post('users/test', formData);
+        const response = await axiosInstance.post('users/create', formData);
         if (response.status !== 200) throw new Error('Network response was not ok');
         return response.data;
       },
