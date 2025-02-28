@@ -7,13 +7,18 @@ router.post('/login', async (req: Request, res: Response) => {
   try {
     const result = await Auth.Login(req.body);
 
-    res.cookie('token', result.data, {
+    res.cookie('token', result.data?.token, {
+      secure: false,
+      maxAge: 60 * 60 * 1000,
+    });
+    console.log(JSON.stringify(result.data?.user));
+    res.cookie('user', JSON.stringify(result.data?.user), {
       secure: false,
       maxAge: 60 * 60 * 1000,
     });
 
     res.status(result.statusCode).json({
-      token: result.data,
+      token: result.data?.user,
       error: result.error,
     });
   } catch (err: any) {

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { queryDataGrid, updateDataGrid } from './commonService';
+import { createDataGrid, queryDataGrid, updateDataGrid } from './commonService';
 import { DataGridOptions } from '@common/models/common';
 import { commentSchema, IComment } from '../models/comment';
 
@@ -9,6 +9,15 @@ const CommentModel = mongoose.model('Comment', commentSchema);
 export async function getComments(options: DataGridOptions) {
   try {
     return await queryDataGrid(CommentModel, options);
+  } catch (err) {
+    console.error('Error querying the database:', err);
+    throw err;
+  }
+}
+
+export async function createComment(model: IComment) {
+  try {
+    return await createDataGrid(CommentModel, model);
   } catch (err) {
     console.error('Error querying the database:', err);
     throw err;

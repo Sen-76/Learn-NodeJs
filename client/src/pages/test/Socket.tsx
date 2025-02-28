@@ -6,7 +6,7 @@ const Socket = () => {
   const [message, setMessage] = useState<string>('');
   const [responses, setResponses] = useState<string[]>([]);
   const sendMessageToServer = () => {
-    if (socket) socket.emit('message', message);
+    if (socket) socket.emit('message', message, { name: 'A' });
     setMessage('');
   };
 

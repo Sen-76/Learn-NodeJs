@@ -8,6 +8,7 @@ const Tanstack = lazy(() => import('@/pages/test/Tanstack'));
 const Socket = lazy(() => import('@/pages/test/Socket'));
 const Login = lazy(() => import('@/pages/auth/Auth'));
 const User = lazy(() => import('@/pages/user/User'));
+const Comment = lazy(() => import('@/pages/comment/Comment'));
 
 const routers: IRoute[] = [
   { name: 'test', path: '/test', element: Test, meta: { pageTitle: 'Test' } },
@@ -16,6 +17,7 @@ const routers: IRoute[] = [
   { name: 'socket', path: '/socket', element: Socket, meta: { pageTitle: 'Socket' } },
   { name: 'login', path: '/login', element: Login, meta: { pageTitle: 'Login' } },
   { name: 'user', path: '/user', element: User, meta: { pageTitle: 'User' } },
+  { name: 'comment', path: '/comment', element: Comment, meta: { pageTitle: 'Comment' } },
   { path: '*', name: '404', element: NotFound, meta: { pageTitle: '404' } },
 ];
 

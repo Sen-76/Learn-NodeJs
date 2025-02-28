@@ -9,9 +9,8 @@ const io = new Server(parseInt(process.env.SOCKET_PORT ?? '3001'), {
 
 export const socket = () =>
   io.on('connection', (socket) => {
-    console.log('A user connected');
-
-    socket.on('message', (data: string) => {
+    socket.on('message', (data: string, user: any) => {
+      console.log(user);
       io.emit('response', 'Message Received: ' + data);
     });
 

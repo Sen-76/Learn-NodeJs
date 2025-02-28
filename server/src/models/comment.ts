@@ -7,7 +7,7 @@ export interface IComment extends Document {
   email: string;
   movie_id: Types.ObjectId;
   text: string;
-  date: Date;
+  date?: string;
 }
 
 // Define the schema
@@ -17,5 +17,5 @@ export const commentSchema = new Schema<IComment>({
   email: { type: String, required: true },
   movie_id: { type: Schema.Types.ObjectId, required: true },
   text: { type: String, required: true },
-  date: { type: Date, required: true },
+  date: { type: String, required: true },
 });

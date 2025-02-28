@@ -1,5 +1,4 @@
-import { Button, Form, Input } from '@/common/components';
-import UploadImage from '@/common/components/UploadImage';
+import { Button, Form, Input, UploadImage } from '@/common/components';
 import axiosInstance from '@/services/axios-instance';
 import { QueryClient } from '@tanstack/react-query';
 import { Rule } from '@/common/components/Input';

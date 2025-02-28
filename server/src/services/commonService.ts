@@ -7,7 +7,7 @@ export async function queryDataGrid<T extends Document>(model: Model<T>, options
 
   if (search && searchFields.length > 0) {
     query.$or = searchFields.map((field) => ({
-      [field]: { $regex: search, $options: 'i' },
+      [field]: search,
     }));
   }
 
@@ -25,6 +25,16 @@ export async function queryDataGrid<T extends Document>(model: Model<T>, options
       totalPages,
     },
   };
+}
+
+export async function createDataGrid<T extends Document>(model: Model<T>, data: Partial<T>) {
+  try {
+    const newDocument = await model.create(data);
+    return newDocument;
+  } catch (err) {
+    console.error('Error creating document:', err);
+    throw err;
+  }
 }
 
 export async function updateDataGrid<T extends Document>(

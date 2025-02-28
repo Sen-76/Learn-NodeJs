@@ -82,8 +82,9 @@ export const Auth = {
         },
         process.env.SECRET_KEY as string
       );
+      console.log(user);
 
-      return { statusCode: 200, data: token };
+      return { statusCode: 200, data: { token: token, user: { name: user.name, email: user.email } } };
     } catch (err) {
       console.error('Error login:', err);
       throw err;
