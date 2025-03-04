@@ -6,3 +6,4 @@ export { default as Input } from './Input';
 export { default as Button } from './Button';
 export { default as UploadImage } from './UploadImage';
 export { default as Richtext } from './Richtext';
+export { default as Model } from './Model';

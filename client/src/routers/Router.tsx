@@ -4,25 +4,33 @@ import { Suspense } from 'react';
 
 const RouteList = (list: IRoute[]) => list?.map?.((route) => RouteItem(route)).filter((item) => item);
 
-const RouteItem = (route: IRoute) => (
-  <Route key={route.name} path={route.path} element={RenderSuspense(route)}>
-    {RouteList(route.children ?? [])}
-  </Route>
-);
+const RouteItem = (route: IRoute) => {
+  const routerProps: A = {};
+  if (route.exact) routerProps.exact = true;
+  return (
+    <Route {...routerProps} key={route.name} path={route.path} element={RenderSuspense(route)}>
+      {RouteList(route.children ?? [])}
+    </Route>
+  );
+};
 
-const RenderSuspense = (route: IRoute) =>
-  route.element && (
+const RenderSuspense = (route: IRoute) => {
+  if (!route.element) return null;
+  return (
     <Suspense fallback={<></>}>
       <route.element />
     </Suspense>
   );
+};
 
 interface IRouter {
   routers: IRoute[];
+  children?: React.ReactNode;
 }
-const Router = ({ routers }: IRouter) => {
+const Router = ({ routers, children }: IRouter) => {
   return (
     <BrowserRouter>
+      {children}
       <Routes>{RouteList(routers)}</Routes>
     </BrowserRouter>
   );

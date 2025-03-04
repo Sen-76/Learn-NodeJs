@@ -10,6 +10,7 @@ export interface Notification {
 
 interface StoreState {
   notification: Notification;
+  headerHeight: string;
   setNotification: (notification: Notification) => void;
 }
 
@@ -21,6 +22,7 @@ const useLayoutStore = create<StoreState>((set) => ({
     open: false,
   },
   setNotification: (noti: Notification) => set((state) => ({ notification: { ...state.notification, ...noti } })),
+  headerHeight: '5rem',
 }));
 
 export default useLayoutStore;

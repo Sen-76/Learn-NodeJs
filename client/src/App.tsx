@@ -1,10 +1,10 @@
 import Router from './routers/Router';
 import routers from './routers/RouterConfig';
 import './App.css';
-import Layout from './Layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SocketProvider } from './hooks/useSocket';
+import MainLayout from './layouts/MainLayout';
 
 const queryClient = new QueryClient();
 
@@ -13,15 +13,14 @@ const App = () => {
     // <StrictMode>
     <QueryClientProvider client={queryClient}>
       <SocketProvider>
-        <Layout>
+        <MainLayout>
           <Router routers={routers}></Router>
-        </Layout>
+        </MainLayout>
       </SocketProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
     // </StrictMode>
   );
 };
 
 export default App;
-
