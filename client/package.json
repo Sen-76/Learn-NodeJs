@@ -29,6 +29,7 @@
     "react-dropzone": "^14.3.8",
     "react-router-dom": "^7.1.5",
     "react-scrollbars-custom": "^4.1.1",
+    "react-swipeable": "^7.0.2",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.0.1",
     "vite-tsconfig-paths": "^5.1.4",

@@ -14,7 +14,7 @@ const HeaderLayout = () => {
       </video> */}
       <Scrollbar style={{ height: '100vh' }} noScrollX>
         <header
-          className="mx-auto max-w-7xl fixed px-6 lg:px-8 w-screen z-40 backdrop-blur-sm text-gray-300 font-semibold"
+          className="mx-auto fixed px-6 lg:px-8 w-screen z-40 backdrop-blur-sm text-gray-300 font-semibold"
           style={{ height: headerHeight }}
         >
           <Header />
