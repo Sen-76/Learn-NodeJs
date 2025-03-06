@@ -1,6 +1,6 @@
 import { cn } from '@/helpers/util';
 import { Link } from 'react-router-dom';
-import AuthModel from './AuthModel';
+import AuthModel from '../AuthModel';
 import Audio from './Audio';
 
 interface NavigationItem {
@@ -19,7 +19,7 @@ const navigation: NavigationItem[] = [
 const Header = () => {
   return (
     <div className="relative flex h-full items-center justify-between">
-      <div className="flex flex-1 items-center sm:items-stretch sm:justify-start">
+      <div className="flex flex-1 items-center sm:items-stretch sm:justify-start text-white">
         {/* LOGO */}
 
         <div className="flex flex-shrink-0 items-center">

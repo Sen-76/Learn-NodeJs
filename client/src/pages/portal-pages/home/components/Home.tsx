@@ -1,5 +1,6 @@
 import { Button, Model } from '@/common/components';
 import Auth from '@/layouts/Auth';
+import useLayoutStore from '@/store/layoutStore';
 import { faDiscord, faFacebook, faInstagram, faXTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
@@ -7,10 +8,11 @@ import { Link } from 'react-router-dom';
 
 const HomeDiv = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { headerHeight } = useLayoutStore();
 
   const rightNav = '80px';
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-screen" style={{ marginTop: `-${headerHeight}` }}>
       <video autoPlay loop muted className="w-screen h-screen object-cover absolute">
         <source
           src="https://web-static.hg-cdn.com/endfield/official-v3/assets/videos/home_pc_en_us_0tGzNpwXVtOGUGcz.mp4"

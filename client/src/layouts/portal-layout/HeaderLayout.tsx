@@ -14,14 +14,17 @@ const HeaderLayout = () => {
       </video> */}
       <Scrollbar style={{ height: '100vh' }} noScrollX>
         <header
-          className="mx-auto fixed px-6 lg:px-8 w-screen z-40 backdrop-blur-sm text-gray-300 font-semibold"
+          className="mx-auto fixed px-6 lg:px-8 w-screen z-40 backdrop-blur-sm font-semibold bg-gray-600/25"
           style={{ height: headerHeight }}
         >
           <Header />
         </header>
-        <div className="w-full z-0 h-screen">
+        <main
+          className="w-full z-0 h-screen"
+          style={{ marginTop: headerHeight, height: `calc(100vh - ${headerHeight})` }}
+        >
           <Outlet></Outlet>
-        </div>
+        </main>
       </Scrollbar>
     </div>
   );

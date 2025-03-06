@@ -1,20 +1,27 @@
 import { IRoute } from './model';
 import { lazy } from 'react';
-import { routerPaths } from './router-paths';
-//pages
-const NotFound = lazy(() => import('@/pages/not-found/NotFound'));
-const Test = lazy(() => import('@/pages/test/Test'));
-const Zustand = lazy(() => import('@/pages/test/Zustand'));
-const Tanstack = lazy(() => import('@/pages/test/Tanstack'));
-const Socket = lazy(() => import('@/pages/test/Socket'));
-const User = lazy(() => import('@/pages/user/User'));
-const Comment = lazy(() => import('@/pages/comment/Comment'));
-const Home = lazy(() => import('@/pages/home'));
-const HeaderLayout = lazy(() => import('@/layouts/HeaderLayout'));
+import { adminRouterPath, routerPaths } from './router-paths';
+
+//layout
+const HeaderLayout = lazy(() => import('@/layouts/portal-layout/HeaderLayout'));
+const AdminLayout = lazy(() => import('@/layouts/admin-layout/AdminLayout'));
+
+//portal-pages
+const NotFound = lazy(() => import('@/pages/portal-pages/not-found/NotFound'));
+const Test = lazy(() => import('@/pages/portal-pages/test/Test'));
+const Zustand = lazy(() => import('@/pages/portal-pages/test/Zustand'));
+const Tanstack = lazy(() => import('@/pages/portal-pages/test/Tanstack'));
+const Socket = lazy(() => import('@/pages/portal-pages/test/Socket'));
+const User = lazy(() => import('@/pages/portal-pages/user/User'));
+const Comment = lazy(() => import('@/pages/portal-pages/comment/Comment'));
+const Home = lazy(() => import('@/pages/portal-pages/home'));
+
+//admin-pages
+const Dashboard = lazy(() => import('@/pages/admin-pages/dashboard/Dashboard'));
 
 const routers: IRoute[] = [
   {
-    name: 'layout',
+    name: 'portal-layout',
     path: routerPaths.home,
     element: HeaderLayout,
     children: [
@@ -66,6 +73,20 @@ const routers: IRoute[] = [
         path: '/socket',
         element: Socket,
         meta: { pageTitle: 'Socket' },
+      },
+    ],
+  },
+  {
+    name: 'admin-layout',
+    path: routerPaths.home,
+    element: AdminLayout,
+    children: [
+      {
+        exact: true,
+        name: 'Dashboard',
+        path: adminRouterPath.test,
+        element: Dashboard,
+        meta: { pageTitle: 'Dashboard' },
       },
     ],
   },
