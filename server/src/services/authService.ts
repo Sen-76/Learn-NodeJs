@@ -80,11 +80,10 @@ export const Auth = {
           name: user.name,
           email: user.email,
         },
-        process.env.SECRET_KEY as string
+        process.env.SECRET_KEY as string,
       );
-      console.log(user);
 
-      return { statusCode: 200, data: { token: token, user: { name: user.name, email: user.email } } };
+      return { statusCode: 200, data: { token: token, user: { name: user.name, email: user.email, id: user.id } } };
     } catch (err) {
       console.error('Error login:', err);
       throw err;
@@ -126,7 +125,7 @@ export const Auth = {
       await this.SendMail(
         user.email,
         'Password Reset Verification Code',
-        `Your verification code is: ${verifyString}. It will expire in 15 minutes.`
+        `Your verification code is: ${verifyString}. It will expire in 15 minutes.`,
       );
 
       return { statusCode: 200 };

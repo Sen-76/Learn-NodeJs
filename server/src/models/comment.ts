@@ -7,7 +7,7 @@ export interface IComment extends Document {
   email: string;
   movie_id: Types.ObjectId;
   text: string;
-  date?: string;
+  date?: Date;
 }
 
 // Define the schema

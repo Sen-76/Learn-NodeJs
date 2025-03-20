@@ -2,15 +2,17 @@ import authenticateJWT from '@/middlewares/authenticateJWT';
 import express, { Request, Response } from 'express';
 import { User } from '@/services/userService';
 import multer from 'multer';
+import { RedisCache } from '@/utils/RedisCache';
+import { cacheMiddleware } from '@/middlewares/redisMiddleware';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-router.post('/querydatagrid', authenticateJWT, async (req: Request, res: Response) => {
+router.post('/querydatagrid', cacheMiddleware('comments', 3600), authenticateJWT, async (req: Request, res: Response) => {
   try {
     const result = await User.getUsers(req.body);
-
+    if (res.locals.cacheKey) await RedisCache.set(res.locals.cacheKey, result, res.locals.ttl);
     res.status(result.statusCode).json(result.data);
   } catch (err: any) {
     console.error('Error in login:', err);

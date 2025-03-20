@@ -9,15 +9,7 @@ import dayjs from 'dayjs';
 const CommentForm = ({ getComment }: A) => {
   const Delta = Quill.import('delta');
   const queryClient = new QueryClient();
-  const mockData = new Delta()
-    .insert('Hello')
-    .insert('\n', { header: 1 })
-    .insert('Some ')
-    .insert('initial', { bold: true })
-    .insert(' ')
-    .insert('content', { underline: true })
-    .insert('\n');
-  const [value, setValue] = useState(mockData);
+  const [value, setValue] = useState(new Delta());
 
   const submitForm = async () => {
     const user: string = cookie.getCookie('user') ?? '';
